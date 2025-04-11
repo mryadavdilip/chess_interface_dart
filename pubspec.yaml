@@ -1,0 +1,11 @@
+name: chess_interface_dart
+description: chess_interface for back-end.
+version: 1.0.0
+repository: https://www.github.com/mryadavdilip/chess_interface_dart.git
+
+environment:
+  sdk: ^3.7.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.24.0
