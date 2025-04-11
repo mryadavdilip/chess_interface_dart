@@ -2,6 +2,6 @@
 
 - Initial version. Extracted pure dart components from chess_interface package, for back-end development
 
-## 1.0.3
+## 1.0.4
 
-- Updated documentation
+- Updated documentation with example and comments in APIs
