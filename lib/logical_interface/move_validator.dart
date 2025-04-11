@@ -1,7 +1,7 @@
 import 'interface.dart';
 import 'piece.dart';
 
-/// This class is responsible for validating moves in a chess game.
+/// This class is responsible for validating moves in [ChessBoardInterface] instance.
 class MoveValidator {
   /// Validates if a move is legal based on the [PieceType] and current [board] state.
   static bool isValidMove(

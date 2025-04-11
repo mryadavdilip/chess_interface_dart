@@ -3,6 +3,7 @@ import 'dart:async';
 import 'move_validator.dart';
 import 'piece.dart';
 
+/// To denote [Position] of a peice
 class Position {
   final int row;
   final int col;
@@ -21,6 +22,7 @@ class Position {
   int get hashCode => row.hashCode ^ col.hashCode;
 }
 
+/// Use this as a main component for simulating chess with complete logics
 class ChessBoardInterface {
   List<List<ChessPiece?>> get _emptyBoard =>
       List.generate(8, (_) => List.filled(8, null));
@@ -372,7 +374,8 @@ extension ChessBoardInterfaceExtension on ChessBoardInterface {
 
   /// Checks if the game is in time out. [turn] is the player loses the game
   bool isTimeOut() {
-    return _blackRemainingTime <= 0 || _whiteRemainingTime <= 0;
+    return timeLimit != null &&
+        (_blackRemainingTime <= 0 || _whiteRemainingTime <= 0);
   }
 
   /// Returns a list of valid moves for the selected piece, to render in the [ChessBoardWidget].

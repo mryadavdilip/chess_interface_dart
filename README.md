@@ -25,7 +25,7 @@ OR
 
 ```yaml
 dependencies:
-  chess_interface_dart: ^1.0.0
+  chess_interface_dart: ^1.0.1
 ```
 
 Then import these:
@@ -42,7 +42,7 @@ ChessBoardInterface game = ChessBoardInterface(
     fen: 'qkN/p7/8/8/8...',
     
     // optional
-    timeLimit: Duration(minute: 10),
+    timeLimit: Duration(minutes: 10),
   );
 ```
 
