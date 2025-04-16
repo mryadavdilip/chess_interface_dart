@@ -14,9 +14,13 @@ enum GameOverBy {
 }
 
 class Arbiter {
+  Function(GameOverBy) onGameOver;
+
+  Arbiter({required this.onGameOver});
+
   /// countdown for player time, if [game] has [timeLimit]
   /// is being used in [ChessBoardWidget] to start [countdownSpectator] when widget is created
-  static void countdownSpectator(game) {
+  void countdownSpectator(ChessBoardInterface game) {
     StreamSubscription<int>? whiteTimeSubscription;
     StreamSubscription<int>? blackTimeSubscription;
 
@@ -42,7 +46,7 @@ class Arbiter {
   }
 
   /// one time spectation
-  static GameOverBy? checkForGameEnd(ChessBoardInterface game) {
+  GameOverBy? checkForGameEnd(ChessBoardInterface game) {
     GameOverBy? gameOverBy;
 
     if (game.isCheckmate()) {
@@ -64,7 +68,7 @@ class Arbiter {
     }
 
     if (gameOverBy != null) {
-      return gameOverBy;
+      onGameOver(gameOverBy);
     }
 
     return null;

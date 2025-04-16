@@ -5,3 +5,7 @@
 ## 1.0.4
 
 - Updated documentation with example and comments in APIs
+
+## 1.0.5
+
+- Implemented onGameOver method in arbiter

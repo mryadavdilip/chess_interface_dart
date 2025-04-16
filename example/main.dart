@@ -11,15 +11,23 @@ ChessBoardInterface game = ChessBoardInterface(
   timeLimit: Duration(minutes: 10),
 );
 
+Arbiter arbiter = Arbiter(
+  onGameOver: (GameOverBy gameOverBy) {
+    if (gameOverBy == GameOverBy.resign) {
+      print(game.turn); // player resigned
+    }
+  },
+);
+
 someFunc() {
   MoveValidator.canCastleKingSide(game, PieceColor.black);
   MoveValidator.canCastleQueenSide(game, PieceColor.black);
 
   // start spectation for countdown
-  Arbiter.countdownSpectator(game);
+  arbiter.countdownSpectator(game);
 
   // check whether game is over for any reason, draw, checkmate, time-over, etc.
-  Arbiter.checkForGameEnd(game);
+  arbiter.checkForGameEnd(game);
 
   // get legal moves for a particular ChessPiece
   game.getValidMoves(Position(row: 5, col: 3));
@@ -39,6 +47,10 @@ someFunc() {
   game.whiteTimeStream.listen((time) {
     print('White\'s time left: $time');
   });
+
+  game.resign =
+      PieceColor
+          .black; // set resignation, and then call arbiter.checkForGameEnd method if countdownSpectator is not spectating already.
 
   // Which player is to move
   game.turn;
