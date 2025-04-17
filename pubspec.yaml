@@ -1,6 +1,6 @@
 name: chess_interface_dart
 description: chess_interface_dart is a pure dart package and doesn't include any flutter component. This package is useful for back-end utilities. Contains detailed examples for every APIs
-version: 1.0.6
+version: 1.0.7
 repository: https://www.github.com/mryadavdilip/chess_interface_dart.git
 
 environment:

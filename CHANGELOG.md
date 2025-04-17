@@ -9,3 +9,7 @@
 ## 1.0.5
 
 - Implemented onGameOver method in arbiter
+
+## 1.0.7
+
+- Arbiter fixed

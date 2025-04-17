@@ -14,7 +14,8 @@ enum GameOverBy {
 }
 
 class Arbiter {
-  Function(GameOverBy) onGameOver;
+  /// Callback is made when [checkForGameEnd] satisfy a condition
+  void Function(GameOverBy)? onGameOver;
 
   Arbiter({required this.onGameOver});
 
@@ -67,10 +68,10 @@ class Arbiter {
       gameOverBy = GameOverBy.fiftyMoveRule;
     }
 
-    if (gameOverBy != null) {
-      onGameOver(gameOverBy);
+    if (gameOverBy != null && onGameOver != null) {
+      onGameOver!(gameOverBy);
     }
 
-    return null;
+    return gameOverBy;
   }
 }
