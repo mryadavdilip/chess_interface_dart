@@ -1,10 +1,18 @@
 import 'dart:convert';
 
+import 'package:change_case/change_case.dart';
+export 'package:change_case/change_case.dart';
+
 /// Chess pieces
 enum PieceType { pawn, knight, bishop, rook, queen, king }
 
 /// Piece colors / Players
-enum PieceColor { white, black }
+enum PieceColor {
+  white,
+  black;
+
+  String get upperFirstCase => name.toUpperFirstCase();
+}
 
 /// A single chess piece of a player
 class ChessPiece {
