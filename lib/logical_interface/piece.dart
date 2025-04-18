@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:change_case/change_case.dart';
-export 'package:change_case/change_case.dart';
+import 'package:chess_interface_dart/change_case.dart';
 
 /// Chess pieces
 enum PieceType { pawn, knight, bishop, rook, queen, king }

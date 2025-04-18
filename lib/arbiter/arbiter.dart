@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chess_interface_dart/change_case.dart';
 import 'package:chess_interface_dart/logical_interface/interface.dart';
 
 enum GameOverBy {
@@ -10,7 +11,9 @@ enum GameOverBy {
   fiftyMoveRule,
   draw,
   resign,
-  timeOut,
+  timeout;
+
+  String get titleCase => name.toTitleCase();
 }
 
 class Arbiter {
@@ -59,7 +62,7 @@ class Arbiter {
     } else if (game.resign != null) {
       gameOverBy = GameOverBy.resign;
     } else if (game.isTimeOut()) {
-      gameOverBy = GameOverBy.timeOut;
+      gameOverBy = GameOverBy.timeout;
     } else if (game.isInsufficientMaterial()) {
       gameOverBy = GameOverBy.insufficientMaterial;
     } else if (game.isThreefoldRepetition()) {
