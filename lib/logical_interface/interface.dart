@@ -11,14 +11,14 @@ class Position {
 
   Position({required this.row, required this.col});
 
-  /// Either [String] or [Map<String, int>]
+  /// Either [String] or [Map<String, dynamic>]
   factory Position.fromJson(dynamic json) {
     assert(json != null, 'JSON cannot be null');
     assert(
-      json is String || json is Map<String, int>,
+      json is String || json is Map<String, dynamic>,
       'Invalid JSON format for Position',
     );
-    json = (json is String ? jsonDecode(json) : json) as Map<String, int>;
+    json = (json is String ? jsonDecode(json) : json) as Map<String, dynamic>;
 
     assert(
       json['row'] != null && json['col'] != null,
@@ -27,9 +27,9 @@ class Position {
     return Position(row: json['row']!, col: json['col']!);
   }
 
-  /// Either [String] or [Map<String, int>]
+  /// Either [String] or [Map<String, dynamic>]
   T toJson<T>() {
-    Map<String, int> map = {'row': row, 'col': col};
+    Map<String, dynamic> map = {'row': row, 'col': col};
 
     if (T == String) {
       return jsonEncode(map) as T;
@@ -106,7 +106,9 @@ class ChessBoardInterface {
   Stream<int> get whiteTimeStream => _whiteTimeController.stream;
   Stream<int> get blackTimeStream => _blackTimeController.stream;
 
-  ChessBoardInterface({this.fen, this.timeLimit}) {
+  Function()? onTimeOut;
+
+  ChessBoardInterface({this.fen, this.timeLimit, this.onTimeOut}) {
     initFEN(fen ?? initialFENState);
     if (timeLimit != null) switchTimer();
   }
@@ -746,26 +748,52 @@ extension BoardUtils on ChessBoardInterface {
 
   void switchTimer({bool stop = false}) {
     _timer?.cancel();
+
     if (stop) {
       _stopwatchWhite.stop();
       _stopwatchBlack.stop();
-      _timer?.cancel();
-    } else if (turn == PieceColor.white) {
-      _stopwatchWhite.start();
-      _stopwatchBlack.stop();
+      return;
+    }
 
-      /// adjust duration according to your clock speed
+    void startPlayerTimer(
+      Stopwatch stopwatch,
+      Stopwatch otherStopwatch,
+      StreamController<int> controller,
+      int Function() remainingTime,
+    ) {
+      stopwatch.start();
+      otherStopwatch.stop();
+
       _timer = Timer.periodic(Duration(milliseconds: 100), (_) {
-        _whiteTimeController.add(_whiteRemainingTime);
+        final timeLeft = remainingTime();
+        if (timeLeft <= 0) {
+          controller.add(0);
+          _timer?.cancel();
+          stopwatch.stop();
+          if (onTimeOut != null) {
+            switchTimer(stop: true);
+            onTimeOut!();
+          }
+        } else {
+          controller.add(timeLeft);
+        }
       });
+    }
+
+    if (turn == PieceColor.white) {
+      startPlayerTimer(
+        _stopwatchWhite,
+        _stopwatchBlack,
+        _whiteTimeController,
+        () => _whiteRemainingTime,
+      );
     } else if (turn == PieceColor.black) {
-      _stopwatchBlack.start();
-      _stopwatchWhite.stop();
-
-      /// adjust duration according to your clock speed
-      _timer = Timer.periodic(Duration(milliseconds: 100), (_) {
-        _blackTimeController.add(_blackRemainingTime);
-      });
+      startPlayerTimer(
+        _stopwatchBlack,
+        _stopwatchWhite,
+        _blackTimeController,
+        () => _blackRemainingTime,
+      );
     }
   }
 

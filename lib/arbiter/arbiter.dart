@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chess_interface_dart/change_case.dart';
 import 'package:chess_interface_dart/logical_interface/interface.dart';
 
@@ -25,27 +23,10 @@ class Arbiter {
   /// countdown for player time, if [game] has [timeLimit]
   /// is being used in [ChessBoardWidget] to start [countdownSpectator] when widget is created
   void countdownSpectator(ChessBoardInterface game) {
-    StreamSubscription<int>? whiteTimeSubscription;
-    StreamSubscription<int>? blackTimeSubscription;
-
     if (game.timeLimit != null) {
-      whiteTimeSubscription = game.whiteTimeStream.listen((countdown) {
-        if (countdown <= 0) {
-          game.switchTimer(stop: true);
-          whiteTimeSubscription?.cancel();
-
-          checkForGameEnd(game);
-        }
-      });
-
-      blackTimeSubscription = game.blackTimeStream.listen((countdown) {
-        if (countdown <= 0) {
-          game.switchTimer(stop: true);
-          blackTimeSubscription?.cancel();
-
-          checkForGameEnd(game);
-        }
-      });
+      game.onTimeOut = () {
+        checkForGameEnd(game);
+      };
     }
   }
 
