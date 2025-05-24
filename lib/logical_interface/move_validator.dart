@@ -1,5 +1,6 @@
 import 'interface.dart';
 import 'piece.dart';
+import 'position.dart';
 
 /// This class is responsible for validating moves in [ChessBoardInterface] instance.
 class MoveValidator {

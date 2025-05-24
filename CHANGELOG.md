@@ -13,3 +13,7 @@
 ## 1.0.7
 
 - Arbiter fixed
+
+## 1.0.8
+
+- Fixed minor issues

@@ -2,6 +2,7 @@ import 'package:chess_interface_dart/arbiter/arbiter.dart';
 import 'package:chess_interface_dart/logical_interface/interface.dart';
 import 'package:chess_interface_dart/logical_interface/move_validator.dart';
 import 'package:chess_interface_dart/logical_interface/piece.dart';
+import 'package:chess_interface_dart/logical_interface/position.dart';
 
 ChessBoardInterface game = ChessBoardInterface(
   // optional

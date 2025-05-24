@@ -25,7 +25,7 @@ OR
 
 ```yaml
 dependencies:
-  chess_interface_dart: ^1.0.7
+  chess_interface_dart: ^1.0.8
 ```
 
 Then import these:
